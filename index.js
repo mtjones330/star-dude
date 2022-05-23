@@ -49,8 +49,9 @@ let scoreText;
 let highScore = 0;
 let highScoreText;
 
-
 function create () {
+
+  this.cameras.main.fadeIn(500)
 
   cursors = this.input.keyboard.createCursorKeys();
   spaceBar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
@@ -116,17 +117,14 @@ function update () {
 
   if (cursors.left.isDown) {
     player.setVelocityX(-160);
-
     player.anims.play('left', true);
   }
   else if (cursors.right.isDown) {
     player.setVelocityX(160);
-
     player.anims.play('right', true);
   }
   else{
     player.setVelocityX(0);
-
     player.anims.play('turn');
   }
 
@@ -159,6 +157,7 @@ function collectStar (player, star) {
 function hitBomb(player, bomb) {
   this.physics.pause();
 
+  this.cameras.main.shake(200);
   player.setTint(0xff0000);
   player.anims.play('turn');
 
@@ -168,5 +167,7 @@ function hitBomb(player, bomb) {
 
   score = 0;
 
-  setTimeout(() => this.scene.restart(), 3000);
+  setTimeout(() => {
+    this.scene.restart()
+  }, 2000);
 }
